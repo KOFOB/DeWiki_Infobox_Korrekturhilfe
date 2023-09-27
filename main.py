@@ -12,11 +12,30 @@ PARAMS = {
     "pllimit": "500"
 }
 
-R = S.get(url=URL, params=PARAMS)
-DATA = R.json()
 
-PAGES = DATA["query"]["pages"]
+def query(request):
+    last_continue = {}
+    while True:
+        # Clone original request
+        req = request.copy()
+        # Modify it with the values returned in the 'continue' section of the last result.
+        req.update(last_continue)
+        # Call API
+        result = requests.get(URL, params=req).json()
 
-for k, v in PAGES.items():
-    for l in v["links"]:
-        print(l["title"])
+        # Removed error if-staement!!
+        if 'warnings' in result:
+            print(result['warnings'])
+        if 'query' in result:
+            yield result['query']
+        if 'continue' not in result:
+            break
+        last_continue = result['continue']
+
+
+for result in query(PARAMS):
+    PAGES = result["pages"]
+
+    for k, v in PAGES.items():
+        for links in v["links"]:
+            print(links["title"])
