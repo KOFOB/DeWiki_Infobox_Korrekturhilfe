@@ -22,8 +22,7 @@ def query(request):
         req.update(last_continue)
         # Call API
         result = requests.get(URL, params=req).json()
-
-        # Removed error if-staement!!
+        # TODO Removed error if-staement!!
         if 'warnings' in result:
             print(result['warnings'])
         if 'query' in result:
@@ -32,10 +31,15 @@ def query(request):
             break
         last_continue = result['continue']
 
+f = open("articles.txt", "a")
+
 
 for result in query(PARAMS):
     PAGES = result["pages"]
 
     for k, v in PAGES.items():
         for links in v["links"]:
-            print(links["title"])
+            f.write(links["title"])
+            f.write('\n')
+
+f.close()
