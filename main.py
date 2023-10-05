@@ -1,8 +1,11 @@
 import extractor
+from simple_check import get_content
 
 
 def main():
-    extractor.extract_articles()
+    print("placeholde for the compiler")
+    get_content("hhh")
+    #extractor.extract_articles()
 
 
 if __name__ == "__main__":

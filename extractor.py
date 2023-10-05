@@ -1,3 +1,6 @@
+# This script finds all articles which can be of the wanted form in the broadest of terms. Currently we still use
+# Aka's list and don't generate our own.
+
 import requests
 
 S = requests.Session()
