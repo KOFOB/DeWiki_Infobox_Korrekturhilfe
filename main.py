@@ -4,7 +4,7 @@ from simple_check import get_content
 
 def main():
     print("placeholde for the compiler")
-    get_content("hhh")
+    get_content("Frankreich")
     #extractor.extract_articles()
 
 
