@@ -49,3 +49,17 @@ def extract_articles():
                 f.write('\n')
 
     f.close()
+
+
+def extract_wikitext(article_name):
+    response = requests.get(
+        'https://de.wikipedia.org/w/api.php',
+        params={
+            'action': 'query',
+            'format': 'json',
+            'titles': article_name,
+            'prop': 'revisions',
+            'rvprop': 'content', }).json()
+
+    for k in response['query']['pages'].values():
+        return k['revisions']

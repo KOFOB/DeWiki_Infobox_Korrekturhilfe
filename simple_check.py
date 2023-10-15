@@ -1,24 +1,14 @@
-# This part of the script just does the most simple checks to see whether an article is even a candidate
-
-import requests
-
-
-# Given the name of the article this method saves the content in wiki-text format in a String
-def get_content(article_name):
-    response = requests.get(
-        'https://de.wikipedia.org/w/api.php',
-        params={
-            'action': 'query',
-            'format': 'json',
-            'titles': article_name,
-            'prop': 'revisions',
-            'rvprop': 'content', }).json()
-
-    for k in response['query']['pages'].values():
-        print(k['revisions'])
+# This class checks given wikitext if it contains a self-made infobox
+from extractor import extract_wikitext
 
 
+class Checker:
+    def __int__(self, article_name, wiki_text):
+        self.article_name = ""
+        self.wiki_text = extract_wikitext(article_name)
 
-# Checks whether there is a raw wiki table in the article as we only want to replace those with infoboxes, if possible
-def check_for_table(article):
-    print("Placeholder again")
+    # Checks whether there is a raw wiki table in the article
+    def check_for_table(self):
+        if self.wiki_text.contains("wikitable"):
+            return True
+        return False
