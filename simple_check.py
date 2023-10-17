@@ -1,25 +1,19 @@
-# This class checks given wikitext if it contains a self-made infobox
+"""
+This files contains the most simple checks to determine if there even can be a handmade-infobox
+"""
 import re
 
-from extractor import extract_wikitext
 
+# Checks whether there is a raw wiki table in the article by checking for "{|"
+def check_for_table(self):
+    # Make a copy, so we only change the copy as we will maybe later still need the full wikitext
+    copy = self.wiki_text.copy()
 
-class Checker:
-    def __int__(self, article_name, wiki_text):
-        self.article_name = ""
-        self.wiki_text = extract_wikitext(article_name)
+    # Define a regular expression pattern to match "<math> ... </math>" to remove math, as there are
+    # also substrings of the form "{|" or "|}", which we want to ignore if they are not part of a wikitable
+    pattern = r'<math>.*?</math>'
 
-    # Checks whether there is a raw wiki table in the article
-    def check_for_table(self):
-        copy = self.wiki_text.copy()
+    # Use re.sub() to replace the matched pattern with an empty string
+    copy = re.sub(pattern, '', copy)
 
-        # Define a regular expression pattern to match "<math> ... </math>" to remove math, as there are
-        # also substrings of the form "{|" or "|}", which we want to ignore
-        pattern = r'<math>.*?</math>'
-
-        # Use re.sub() to replace the matched pattern with an empty string
-        copy = re.sub(pattern, '', copy)
-
-        if copy.contains("{|"):
-            return True
-        return False
+    return True if "{|" in copy else False

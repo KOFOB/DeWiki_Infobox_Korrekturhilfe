@@ -1,5 +1,9 @@
-# This script finds all articles which can be of the wanted form in the broadest of terms. Currently we still use
-# Aka's list and don't generate our own.
+"""
+This files contains the methods to find all suspect articles, but for now we still use the list of the user "Aka".
+Other API-requests are also handled here, like the extraction of the entire wikitext or categories...
+"""
+
+# TODO comments
 
 import requests
 
